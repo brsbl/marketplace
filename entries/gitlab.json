@@ -6,6 +6,7 @@
     "url": "./icons/gitlab-37bd255a.svg"
   },
   "tags": ["gitlab", "issues", "merge-requests", "code-review", "interface"],
+  "category": "code-and-reviews",
   "author": {
     "name": "Marius Nouchet",
     "github": "suiramdev",

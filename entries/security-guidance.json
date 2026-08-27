@@ -11,6 +11,7 @@
     "safety",
     "agent-interaction"
   ],
+  "category": "security",
   "author": {
     "name": "prismatic7",
     "github": "prismatic7"

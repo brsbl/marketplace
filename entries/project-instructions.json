@@ -11,6 +11,7 @@
     "monorepo",
     "settings"
   ],
+  "category": "memory-and-context",
   "author": {
     "name": "Roger Serra",
     "github": "Hazihell"

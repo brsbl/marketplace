@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://getbb.app/schemas/marketplace-v2.schema.json",
+  "title": "BB plugin marketplace manifest (v2)",
+  "description": "The discovery catalog. Every v1 field means exactly what it means in v1; v2 adds the category each listing files under, optional screenshots, and the publication dates the registry derives from its own git history. Released clients that predate v2 keep reading marketplace/v1, which this manifest never replaces.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "name",
+    "displayName",
+    "newAndNotable",
+    "plugins"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://getbb.app/schemas/marketplace-v2.schema.json"
+    },
+    "schemaVersion": {
+      "const": 2
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "newAndNotable": {
+      "type": "array",
+      "$comment": "Curated shelf, most notable first. Every id must name an entry in plugins.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]*$"
+      }
+    },
+    "plugins": {
+      "type": "array",
+      "$comment": "Entry ids must also be unique within one manifest.",
+      "items": {
+        "$ref": "#/$defs/entry"
+      },
+      "maxItems": 256
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "displayName",
+        "description",
+        "icon",
+        "category",
+        "author",
+        "source"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "$comment": "The plugin id this entry installs; BB refuses an install whose manifest declares another id.",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string",
+              "$comment": "A host icon name such as ZoomIn.",
+              "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "url"
+              ],
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "$comment": "Absolute https URL, or a URL relative to this manifest. Must end in .svg, .png, or .webp.",
+                  "pattern": "^(?!http:)(?:https://)?[^\\s]+\\.(?:svg|png|webp)$"
+                }
+              }
+            }
+          ]
+        },
+        "category": {
+          "$comment": "One of BB's sixteen canonical categories. The list is closed: there is no Other.",
+          "enum": [
+            "themes-and-appearance",
+            "thread-lists-and-navigation",
+            "thread-messages-and-timelines",
+            "composer-and-prompts",
+            "memory-and-context",
+            "agent-tools",
+            "security",
+            "agents-and-providers",
+            "token-usage-and-cost",
+            "notifications-and-attention",
+            "code-and-reviews",
+            "files-and-viewers",
+            "machines-and-hosts",
+            "plugin-development",
+            "task-tracking",
+            "automation"
+          ]
+        },
+        "screenshots": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "$comment": "An https URL or a relative .png/.jpg/.jpeg/.webp asset in this repository.",
+            "pattern": "^(?:(?![A-Za-z][A-Za-z0-9+.-]*:)|(?=[Hh][Tt][Tt][Pp][Ss]:))[^\\s]*\\.(?:[Pp][Nn][Gg]|[Jj][Pp][Ee]?[Gg]|[Ww][Ee][Bb][Pp])(?:[?#][^\\s]*)?$"
+          }
+        },
+        "publishedAt": {
+          "type": "string",
+          "format": "date-time",
+          "$comment": "Derived at build time from the first commit of this entry file. Not author-supplied."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "$comment": "Derived at build time from the latest commit of this entry file. Not author-supplied."
+        },
+        "tags": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "maxLength": 32,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        },
+        "author": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name"
+          ],
+          "$comment": "Never put an email address here: the manifest is public and mirrored.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "github": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9](?:-?[A-Za-z0-9]){0,38}$"
+            },
+            "url": {
+              "type": "string",
+              "pattern": "^https://"
+            }
+          }
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/npmSource"
+            },
+            {
+              "$ref": "#/$defs/gitRefSource"
+            },
+            {
+              "$ref": "#/$defs/gitRangeSource"
+            }
+          ]
+        }
+      }
+    },
+    "npmSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "npm"
+      ],
+      "properties": {
+        "npm": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "package"
+          ],
+          "$comment": "range and tag are mutually exclusive.",
+          "not": {
+            "required": [
+              "range",
+              "tag"
+            ]
+          },
+          "properties": {
+            "package": {
+              "type": "string",
+              "pattern": "^(?:@[a-z0-9][a-z0-9._~-]*/)?[a-z0-9][a-z0-9._~-]*$"
+            },
+            "range": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tag": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9._-]*$"
+            },
+            "registry": {
+              "type": "string",
+              "pattern": "^https://"
+            }
+          }
+        }
+      }
+    },
+    "gitSubdir": {
+      "type": "string",
+      "$comment": "Repository-relative directory; absolute paths, empty segments, .. and .git are rejected.",
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!(?:[^/]+/)*(?:\\.|\\.\\.|\\.git)(?:/|$))[^/\\\\]+(?:/[^/\\\\]+)*$"
+    },
+    "gitRefSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "git"
+      ],
+      "$comment": "One branch, tag, or commit. Mutually exclusive with the range form.",
+      "properties": {
+        "git": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "url",
+            "ref"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://"
+            },
+            "subdir": {
+              "$ref": "#/$defs/gitSubdir"
+            },
+            "ref": {
+              "type": "string",
+              "$comment": "Must round-trip through BB's git:<url>@<ref> install syntax, so \":\" (which BB reads as a ref:/semver: selector) is rejected.",
+              "pattern": "^(?!-)(?![\\s\\S]*\\.\\.)(?![\\s\\S]*@)(?![\\s\\S]*:)[\\s\\S]+$"
+            }
+          }
+        }
+      }
+    },
+    "gitRangeSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "git"
+      ],
+      "$comment": "A semver range resolved over the repository's [tagPrefix]vX.Y.Z release tags. BB records the tag and commit it selected and refuses a tag that later points elsewhere.",
+      "properties": {
+        "git": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "url",
+            "range"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://"
+            },
+            "subdir": {
+              "$ref": "#/$defs/gitSubdir"
+            },
+            "range": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tagPrefix": {
+              "type": "string",
+              "$comment": "Monorepo tagging: \"notes/\" matches notes/vX.Y.Z tags. Omit for repository-wide vX.Y.Z tags.",
+              "maxLength": 128,
+              "pattern": "^(?!.*\\.\\.)(?!.*//)(?!.*\\/\\.)(?![^/]*\\.lock(?:/|$))(?!.*\\/[^/]*\\.lock(?:/|$))(?!.*\\.$)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

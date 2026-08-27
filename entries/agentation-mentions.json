@@ -13,6 +13,7 @@
     "queue",
     "visual-feedback"
   ],
+  "category": "plugin-development",
   "author": {
     "name": "Phosphor",
     "github": "its-rosetta",

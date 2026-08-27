@@ -4,6 +4,7 @@
   "description": "A sidebar inspired by T3 Code that adds manual and automatic thread sorting, collapsible shelves, and bulk actions to bb.",
   "icon": "PanelLeft",
   "tags": ["interface", "sidebar", "threads", "inbox", "productivity"],
+  "category": "thread-lists-and-navigation",
   "author": {
     "name": "Yusuf Akbulut",
     "github": "yusuf8834",

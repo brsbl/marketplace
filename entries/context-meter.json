@@ -12,6 +12,7 @@
     "tokens",
     "smart-zone"
   ],
+  "category": "token-usage-and-cost",
   "author": {
     "name": "Roger Serra",
     "github": "Hazihell"

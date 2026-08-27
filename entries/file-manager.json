@@ -11,6 +11,7 @@
     "host-access",
     "interface"
   ],
+  "category": "machines-and-hosts",
   "author": {
     "name": "Foma",
     "github": "xMinor-1",

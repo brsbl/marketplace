@@ -4,6 +4,7 @@
   "description": "Adds an annotation toolbar to bb: point at any part of the interface, including other plugins' surfaces, and send the marked-up elements to a thread as structured feedback agents can read, reply to, and resolve.",
   "icon": { "url": "./icons/agentation-2c7e22e8.svg" },
   "tags": ["annotations", "visual-feedback", "review", "interface", "agents", "toolbar"],
+  "category": "plugin-development",
   "author": {
     "name": "Scott Sunarto",
     "github": "smsunarto",

@@ -4,6 +4,7 @@
   "description": "Shows the complete Git history of a project as a compact commit graph with changed files and per-file diffs.",
   "icon": "FolderGit",
   "tags": ["git", "history", "version-control", "diffs", "interface"],
+  "category": "code-and-reviews",
   "author": {
     "name": "Yusuf Akbulut",
     "github": "yusuf8834",

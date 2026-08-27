@@ -12,6 +12,7 @@
     "task-routing",
     "prompt-expansion"
   ],
+  "category": "composer-and-prompts",
   "author": {
     "name": "Shane Logsdon",
     "github": "slogsdon",

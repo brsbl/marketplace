@@ -4,6 +4,7 @@
   "description": "A tinted replacement for bb's sidebar thread list with active and blocked row hues, provider glyphs, git diff badges, and sub-thread nesting.",
   "icon": "PanelLeft",
   "tags": ["interface", "sidebar", "threads"],
+  "category": "thread-lists-and-navigation",
   "author": {
     "name": "Tom McKenzie",
     "github": "grrowl"

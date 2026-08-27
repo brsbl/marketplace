@@ -6,6 +6,7 @@
     "url": "./icons/gtd-sidebar-0a2df40e.svg"
   },
   "tags": ["interface", "sidebar", "threads", "inbox", "productivity"],
+  "category": "thread-lists-and-navigation",
   "author": {
     "name": "Scott Sunarto",
     "github": "smsunarto",

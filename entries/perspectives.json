@@ -12,6 +12,7 @@
     "orchestration",
     "research"
   ],
+  "category": "agent-tools",
   "author": {
     "name": "Phosphor",
     "github": "its-rosetta",

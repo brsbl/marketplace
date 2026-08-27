@@ -11,6 +11,7 @@
     "interface",
     "markdown"
   ],
+  "category": "thread-messages-and-timelines",
   "author": {
     "name": "Pablo Oliva",
     "github": "pablooliva",

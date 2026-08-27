@@ -10,6 +10,7 @@
     "file-transfer",
     "ghostty"
   ],
+  "category": "machines-and-hosts",
   "author": {
     "name": "Andrew Kiryushkin",
     "github": "Diffuzmetall",

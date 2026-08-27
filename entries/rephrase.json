@@ -4,6 +4,7 @@
   "description": "Adds a Re-phrase button to the prompt input that rewrites your draft with an agent and puts the result back in the composer.",
   "icon": "AiContentGenerator01",
   "tags": ["prompt", "composer", "interface", "writing"],
+  "category": "composer-and-prompts",
   "author": {
     "name": "suiramdev",
     "github": "suiramdev"

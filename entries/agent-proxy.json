@@ -6,6 +6,7 @@
     "url": "./icons/agent-proxy-b3dff2b6.svg"
   },
   "tags": ["proxy", "providers", "oauth", "agents", "developer-tools"],
+  "category": "agents-and-providers",
   "author": {
     "name": "Scott Sunarto",
     "github": "smsunarto",

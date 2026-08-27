@@ -6,6 +6,7 @@
     "url": "./icons/gh-stack-638265b0.svg"
   },
   "tags": ["github", "pull-requests", "stacked-prs", "git", "developer-tools"],
+  "category": "code-and-reviews",
   "author": {
     "name": "Scott Sunarto",
     "github": "smsunarto",

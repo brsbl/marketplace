@@ -6,6 +6,7 @@
     "url": "./icons/bb-better-latex-8274bdfa.svg"
   },
   "tags": ["interface", "latex", "math", "markdown"],
+  "category": "thread-messages-and-timelines",
   "author": {
     "name": "Zhen Huang",
     "github": "ZhenHuangLab",

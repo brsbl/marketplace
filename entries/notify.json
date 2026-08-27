@@ -6,6 +6,7 @@
     "url": "./icons/notify-c5803165.svg"
   },
   "tags": ["notifications", "macos", "threads", "agent-tools"],
+  "category": "notifications-and-attention",
   "author": {
     "name": "Scott Sunarto",
     "github": "smsunarto",

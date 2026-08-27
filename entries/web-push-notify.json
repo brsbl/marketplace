@@ -4,6 +4,7 @@
   "description": "Sends browser notifications when BB agents finish or fail, even while BB is closed.",
   "icon": "Mail",
   "tags": ["agents", "notifications", "web-push"],
+  "category": "notifications-and-attention",
   "author": {
     "name": "Mayank Bansal",
     "github": "MayankBansal12"

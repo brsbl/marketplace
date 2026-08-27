@@ -11,6 +11,7 @@
     "filtering",
     "agent-interaction"
   ],
+  "category": "agent-tools",
   "author": {
     "name": "prismatic7",
     "github": "prismatic7"

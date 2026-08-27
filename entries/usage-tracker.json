@@ -10,6 +10,7 @@
     "claude-code",
     "sidebar"
   ],
+  "category": "token-usage-and-cost",
   "author": {
     "name": "Mateo Cerquetella",
     "github": "MateoCerquetella",

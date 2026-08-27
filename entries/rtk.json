@@ -11,6 +11,7 @@
     "shell",
     "filtering"
   ],
+  "category": "agent-tools",
   "author": {
     "name": "prismatic7",
     "github": "prismatic7"

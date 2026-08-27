@@ -11,6 +11,7 @@
     "federation",
     "agent-interaction"
   ],
+  "category": "memory-and-context",
   "author": {
     "name": "prismatic7",
     "github": "prismatic7"

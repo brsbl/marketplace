@@ -9,6 +9,7 @@
     "attention",
     "notifications"
   ],
+  "category": "notifications-and-attention",
   "author": {
     "name": "Shane Logsdon",
     "github": "slogsdon",

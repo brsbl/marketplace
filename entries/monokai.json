@@ -6,6 +6,7 @@
     "url": "./icons/monokai-ae0f7cce.svg"
   },
   "tags": ["theme", "dark", "monokai", "terminal", "interface"],
+  "category": "themes-and-appearance",
   "author": {
     "name": "Scott Sunarto",
     "github": "smsunarto",

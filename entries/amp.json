@@ -6,6 +6,7 @@
     "url": "./icons/amp-84180045.svg"
   },
   "tags": ["amp", "provider", "agents", "acp", "sandbox"],
+  "category": "agents-and-providers",
   "author": {
     "name": "Scott Sunarto",
     "github": "smsunarto",

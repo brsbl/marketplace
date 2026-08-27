@@ -14,6 +14,7 @@
     "tabs",
     "multi-machine"
   ],
+  "category": "machines-and-hosts",
   "author": {
     "name": "Vedran Burojevic",
     "github": "vburojevic"

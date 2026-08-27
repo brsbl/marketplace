@@ -6,6 +6,7 @@
     "url": "./icons/cascade-7b651515.svg"
   },
   "tags": ["interface", "threads", "workspace"],
+  "category": "thread-lists-and-navigation",
   "author": {
     "name": "Sawyer Hood",
     "github": "SawyerHood"

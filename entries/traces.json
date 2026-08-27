@@ -12,6 +12,7 @@
     "trajectories",
     "developer-tools"
   ],
+  "category": "plugin-development",
   "author": {
     "name": "Patrick Lee",
     "github": "patleeman",

@@ -11,6 +11,7 @@
     "sounds",
     "attention"
   ],
+  "category": "notifications-and-attention",
   "author": {
     "name": "Guilherme J. Tramontina",
     "github": "gtramontina",

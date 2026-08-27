@@ -13,6 +13,7 @@
     "linear",
     "jira"
   ],
+  "category": "task-tracking",
   "author": {
     "name": "Mateo Cerquetella",
     "github": "MateoCerquetella",

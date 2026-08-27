@@ -11,6 +11,7 @@
     "monitoring",
     "agent-interaction"
   ],
+  "category": "token-usage-and-cost",
   "author": {
     "name": "prismatic7",
     "github": "prismatic7"

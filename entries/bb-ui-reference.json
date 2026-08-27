@@ -6,6 +6,7 @@
     "url": "./icons/bb-ui-reference-cc9d856d.png"
   },
   "tags": ["design-system", "developer-tools", "interface", "themes"],
+  "category": "plugin-development",
   "author": {
     "name": "Phosphor",
     "github": "its-rosetta",

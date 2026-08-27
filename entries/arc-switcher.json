@@ -4,6 +4,7 @@
   "description": "Cycles through your seven most recently opened BB chats with an Arc-style Command-D switcher.",
   "icon": "Layers",
   "tags": ["interface", "keyboard-shortcuts", "navigation", "threads"],
+  "category": "thread-lists-and-navigation",
   "author": {
     "name": "Elliott McNary",
     "github": "bighitbiker3"

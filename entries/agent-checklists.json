@@ -4,6 +4,7 @@
   "description": "Keeps a persisted set of agent-owned steps attached to each BB thread and continues incomplete work automatically.",
   "icon": "ClipboardCheck",
   "tags": ["agent-tools", "checklists", "threads", "automation", "productivity"],
+  "category": "task-tracking",
   "author": {
     "name": "Patrick Lee",
     "github": "patleeman",

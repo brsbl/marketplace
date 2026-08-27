@@ -6,6 +6,7 @@
     "url": "./icons/dependabot-5b70e0d3.svg"
   },
   "tags": ["dependabot", "github", "security", "dependencies", "alerts"],
+  "category": "code-and-reviews",
   "author": {
     "name": "Nicolas Charpentier",
     "github": "charpeni",

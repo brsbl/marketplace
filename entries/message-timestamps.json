@@ -4,6 +4,7 @@
   "description": "Shows the time you sent each message next to your bubbles in BB chat windows.",
   "icon": "Clock",
   "tags": ["interface", "chat", "messages", "threads"],
+  "category": "thread-messages-and-timelines",
   "author": {
     "name": "Elliott McNary",
     "github": "bighitbiker3"

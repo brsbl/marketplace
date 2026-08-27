@@ -11,6 +11,7 @@
     "networking",
     "process-management"
   ],
+  "category": "machines-and-hosts",
   "author": {
     "name": "Rama Audra",
     "github": "ramaaudra",

@@ -11,6 +11,7 @@
     "notes",
     "threads"
   ],
+  "category": "thread-messages-and-timelines",
   "author": {
     "name": "Phosphor",
     "github": "its-rosetta",

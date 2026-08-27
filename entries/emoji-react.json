@@ -6,6 +6,7 @@
     "url": "./icons/emoji-react-61419fba.svg"
   },
   "tags": ["emoji", "reactions", "chat", "interface"],
+  "category": "thread-messages-and-timelines",
   "author": {
     "name": "Patrick Lee",
     "github": "patleeman",

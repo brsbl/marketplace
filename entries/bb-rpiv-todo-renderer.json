@@ -6,6 +6,7 @@
     "url": "./icons/bb-rpiv-todo-renderer-3665901c.svg"
   },
   "tags": ["interface", "todo", "composer", "pi"],
+  "category": "thread-messages-and-timelines",
   "author": {
     "name": "Zhen Huang",
     "github": "ZhenHuangLab",

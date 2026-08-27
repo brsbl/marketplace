@@ -5,7 +5,10 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
+      # Full history so the v2 date derivation runs the same way it will on
+      # publish; a shallow checkout fails the build rather than dating wrong.
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: npm ci

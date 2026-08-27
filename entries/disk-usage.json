@@ -6,6 +6,7 @@
     "url": "./icons/disk-usage-fff016e3.svg"
   },
   "tags": ["disk-usage", "storage", "ncdu", "server", "interface"],
+  "category": "machines-and-hosts",
   "author": {
     "name": "Nicolas Charpentier",
     "github": "charpeni",

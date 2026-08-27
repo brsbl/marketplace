@@ -11,6 +11,7 @@
     "quality",
     "reviews"
   ],
+  "category": "agent-tools",
   "author": {
     "name": "Salem Sayed Abdel Gawad",
     "github": "salemsayed",

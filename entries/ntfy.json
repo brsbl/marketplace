@@ -11,6 +11,7 @@
     "push",
     "mobile"
   ],
+  "category": "notifications-and-attention",
   "author": {
     "name": "Shane Logsdon",
     "github": "slogsdon",

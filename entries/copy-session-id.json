@@ -4,6 +4,7 @@
   "description": "Copy a thread's session ID from its left-sidebar context menu.",
   "icon": "Copy",
   "tags": ["clipboard", "threads", "sidebar"],
+  "category": "thread-lists-and-navigation",
   "author": {
     "name": "Patrick Lee",
     "github": "patleeman",

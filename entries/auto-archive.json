@@ -9,6 +9,7 @@
     "automation",
     "cleanup"
   ],
+  "category": "automation",
   "author": {
     "name": "Shane Logsdon",
     "github": "slogsdon",

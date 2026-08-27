@@ -4,6 +4,7 @@
   "description": "Tracks coding-agent token usage and estimated API cost across enrolled machines.",
   "icon": "ChartColumn",
   "tags": ["analytics", "costs", "tokens", "usage"],
+  "category": "token-usage-and-cost",
   "author": {
     "name": "Mayank Bansal",
     "github": "MayankBansal12"

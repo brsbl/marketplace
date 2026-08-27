@@ -13,6 +13,7 @@
     "openrouter",
     "opencode"
   ],
+  "category": "token-usage-and-cost",
   "author": {
     "name": "Shane Logsdon",
     "github": "slogsdon",

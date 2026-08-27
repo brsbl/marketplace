@@ -10,6 +10,7 @@
     "setup",
     "automation"
   ],
+  "category": "machines-and-hosts",
   "author": {
     "name": "Kavii Suri",
     "github": "KaviiSuri"

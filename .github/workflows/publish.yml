@@ -8,7 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      # Full history: v2 derives each listing's publication dates from this
+      # repository's commits, and a shallow checkout would date every entry
+      # from the same single commit. The build refuses to run shallow.
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: npm ci
@@ -24,11 +28,21 @@ jobs:
             npx wrangler@4 r2 object put "bb-marketplace/icons/$(basename "$icon")" \
               --file "$icon" --remote
           done
-      - name: Upload manifest
+      # v1 sits at the bucket root because released clients already fetch that
+      # key; v2 lives under v2/ so discovery assets can evolve without it.
+      - name: Upload v1 manifest
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           npx wrangler@4 r2 object put "bb-marketplace/marketplace.json" \
             --file dist/marketplace.json \
+            --content-type application/json --remote
+      - name: Upload v2 manifest
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx wrangler@4 r2 object put "bb-marketplace/v2/marketplace.json" \
+            --file dist/v2/marketplace.json \
             --content-type application/json --remote

@@ -4,6 +4,7 @@
   "description": "Replaces the BB thread list with a stable inbox, snooze controls, and child thread links.",
   "icon": "PanelLeft",
   "tags": ["interface", "sidebar", "threads"],
+  "category": "thread-lists-and-navigation",
   "author": {
     "name": "Sawyer Hood",
     "github": "SawyerHood"
