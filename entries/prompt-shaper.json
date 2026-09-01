@@ -1,0 +1,20 @@
+{
+  "id": "prompt-shaper",
+  "displayName": "Prompt Improver",
+  "description": "Rewrites a rough composer draft in a hidden helper thread, returns it in place for review, and supports cancellation and undo.",
+  "icon": "AiContentGenerator01",
+  "tags": ["composer", "prompt", "writing", "rewrite", "interface", "undo"],
+  "author": {
+    "name": "brsbl",
+    "github": "brsbl",
+    "url": "https://github.com/brsbl"
+  },
+  "source": {
+    "git": {
+      "url": "https://github.com/brsbl/bb-plugins.git",
+      "subdir": "plugins/improve-prompt",
+      "range": "^0.1.0",
+      "tagPrefix": "prompt-shaper/"
+    }
+  }
+}

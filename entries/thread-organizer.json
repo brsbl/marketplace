@@ -1,0 +1,22 @@
+{
+  "id": "thread-organizer",
+  "displayName": "Thread Organizer",
+  "description": "Organizes threads into configurable workflow sections and keeps unread idle work in a protected Inbox until it resumes or is explicitly cleared.",
+  "icon": {
+    "url": "./icons/thread-organizer-508db34f.svg"
+  },
+  "tags": ["sidebar", "threads", "workflow", "inbox", "sections", "productivity"],
+  "author": {
+    "name": "brsbl",
+    "github": "brsbl",
+    "url": "https://github.com/brsbl"
+  },
+  "source": {
+    "git": {
+      "url": "https://github.com/brsbl/bb-plugins.git",
+      "subdir": "plugins/thread-organizer",
+      "range": "^0.1.0",
+      "tagPrefix": "thread-organizer/"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "mesh-gradient",
+  "displayName": "Mesh Gradient",
+  "description": "Adds a visual mesh-gradient studio with direct canvas editing, agent handoff, PNG export, design tokens, reusable presets, and six bb themes.",
+  "icon": {
+    "url": "./icons/mesh-gradient-ef60958c.svg"
+  },
+  "tags": ["design", "gradients", "themes", "assets", "css", "png", "agent-tools", "design-tokens"],
+  "author": {
+    "name": "brsbl",
+    "github": "brsbl",
+    "url": "https://github.com/brsbl"
+  },
+  "source": {
+    "git": {
+      "url": "https://github.com/brsbl/bb-plugins.git",
+      "subdir": "plugins/mesh-gradient",
+      "range": "^0.1.0",
+      "tagPrefix": "mesh-gradient/"
+    }
+  }
+}

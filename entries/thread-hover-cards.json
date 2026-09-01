@@ -1,0 +1,20 @@
+{
+  "id": "thread-hover-cards",
+  "displayName": "Thread Hover Cards",
+  "description": "Shows thread and section status, latest agent updates, execution context, repository, and pull-request details in sidebar hover cards.",
+  "icon": "ZoomIn",
+  "tags": ["sidebar", "threads", "status", "hover", "pull-requests", "interface"],
+  "author": {
+    "name": "brsbl",
+    "github": "brsbl",
+    "url": "https://github.com/brsbl"
+  },
+  "source": {
+    "git": {
+      "url": "https://github.com/brsbl/bb-plugins.git",
+      "subdir": "plugins/thread-hover-cards",
+      "range": "^0.1.0",
+      "tagPrefix": "thread-hover-cards/"
+    }
+  }
+}

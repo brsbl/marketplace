@@ -1,0 +1,22 @@
+{
+  "id": "color-swatches",
+  "displayName": "Color Swatches",
+  "description": "Renders inline chips for CSS color literals in thread code and submitted messages without changing copied text.",
+  "icon": {
+    "url": "./icons/color-swatches-6c3084ca.svg"
+  },
+  "tags": ["colors", "css", "code", "timeline", "interface", "design"],
+  "author": {
+    "name": "brsbl",
+    "github": "brsbl",
+    "url": "https://github.com/brsbl"
+  },
+  "source": {
+    "git": {
+      "url": "https://github.com/brsbl/bb-plugins.git",
+      "subdir": "plugins/color-swatches",
+      "range": "^0.1.0",
+      "tagPrefix": "color-swatches/"
+    }
+  }
+}
