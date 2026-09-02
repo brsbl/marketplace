@@ -1,7 +1,7 @@
 {
   "id": "prompt-shaper",
   "displayName": "Prompt Improver",
-  "description": "Rewrites rough text in the prompt box into a clearer agent request with explicit context, boundaries, verification, and stopping conditions, reducing what the agent has to guess.",
+  "description": "Rewrites rough text in the prompt box into a clearer agent request with explicit context, boundaries, verification, and stopping conditions, reducing what the agent has to guess. The returned prompts are optimized to help get the most accurate output from an agent in as few turns as possible.",
   "icon": "AiContentGenerator01",
   "tags": ["composer", "prompt", "writing", "rewrite", "interface", "undo"],
   "author": {
