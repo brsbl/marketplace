@@ -1,7 +1,7 @@
 {
   "id": "prompt-shaper",
   "displayName": "Prompt Improver",
-  "description": "Rewrites a rough composer draft in a hidden helper thread, returns it in place for review, and supports cancellation and undo.",
+  "description": "Rewrites rough text in the prompt box into a clearer agent request with explicit context, boundaries, verification, and stopping conditions, reducing what the agent has to guess.",
   "icon": "AiContentGenerator01",
   "tags": ["composer", "prompt", "writing", "rewrite", "interface", "undo"],
   "author": {
@@ -9,6 +9,11 @@
     "github": "brsbl",
     "url": "https://github.com/brsbl"
   },
+  "category": "thread-content",
+  "screenshots": [
+    "./screenshots/prompt-shaper/running.png",
+    "./screenshots/prompt-shaper/result.png"
+  ],
   "source": {
     "git": {
       "url": "https://github.com/brsbl/bb-plugins.git",

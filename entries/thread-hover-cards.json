@@ -1,7 +1,7 @@
 {
   "id": "thread-hover-cards",
   "displayName": "Thread Hover Cards",
-  "description": "Shows thread and section status, latest agent updates, execution context, repository, and pull-request details in sidebar hover cards.",
+  "description": "Hover a sidebar thread to see its model, status, latest reply, workspace, and PR, or a section to see questions, failures, working, and unread counts without opening either.",
   "icon": "ZoomIn",
   "tags": ["sidebar", "threads", "status", "hover", "pull-requests", "interface"],
   "author": {
@@ -9,6 +9,11 @@
     "github": "brsbl",
     "url": "https://github.com/brsbl"
   },
+  "category": "thread-management",
+  "screenshots": [
+    "./screenshots/thread-hover-cards/thread.png",
+    "./screenshots/thread-hover-cards/section.png"
+  ],
   "source": {
     "git": {
       "url": "https://github.com/brsbl/bb-plugins.git",
