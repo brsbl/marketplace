@@ -1,7 +1,7 @@
 {
   "id": "at-plugin",
   "displayName": "@Plugin",
-  "description": "Adds installed and Community plugins to bb's @ menu, giving agents the right plugin context without requiring you to explain each capability.",
+  "description": "Adds installed and Community plugins to bb's @ menu. Use this to tell your agent about a plugin without describing its capabilities, or to search for community plugins and then have your agent install them for you.",
   "icon": {
     "url": "./icons/at-plugin-8e110197.svg"
   },
