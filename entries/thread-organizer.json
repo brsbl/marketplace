@@ -32,9 +32,7 @@
   "source": {
     "git": {
       "url": "https://github.com/brsbl/bb-plugins.git",
-      "subdir": "plugins/thread-organizer",
-      "range": "^0.1.1",
-      "tagPrefix": "thread-organizer/"
+      "ref": "plugin/thread-organizer"
     }
   }
 }
