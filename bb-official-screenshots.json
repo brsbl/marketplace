@@ -9,7 +9,11 @@
     "./screenshots/plugin-api-docs/plugin-guide-reference.png"
   ],
   "docs": [
-    "./screenshots/docs/docs-inline-review-desktop-b461fea1d.png",
-    "./screenshots/docs/docs-inline-review-mobile-b461fea1d.png"
+    "./screenshots/docs/docs-21ddb6757-inline-review-desktop.png",
+    "./screenshots/docs/docs-21ddb6757-inline-editing-desktop.png",
+    "./screenshots/docs/docs-21ddb6757-ask-mobile.png",
+    "./screenshots/docs/docs-21ddb6757-workspace-desktop.png",
+    "./screenshots/docs/docs-21ddb6757-html-desktop.png",
+    "./screenshots/docs/docs-21ddb6757-vault-desktop.png"
   ]
 }
