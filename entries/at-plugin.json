@@ -1,8 +1,8 @@
 {
   "id": "at-plugin",
   "displayName": "Plugin Finder",
-  "description": "Find the plugin for your task without leaving the thread. Type # and a keyword to search the plugins you have and the ones in BB Community, then mention the one you want your agent to use. Your agent can also search the catalog itself from the command line.",
-  "icon": "Zap",
+  "description": "Find the plugin for your task without leaving the thread. Type # or @ and a keyword to search the plugins you have and the ones in BB Community, then mention the one you want your agent to use. Your agent can also search the catalog itself from the command line.",
+  "icon": "Target",
   "tags": [
     "plugins",
     "search",
