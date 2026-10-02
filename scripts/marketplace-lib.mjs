@@ -712,8 +712,8 @@ export function readEntryAddedDates(root) {
   return parseEntryAddedDates(output);
 }
 
-export const COLLECTION_SIZE = 8;
-export const TRENDING_MIN_RECENT_INSTALLS = 5;
+const COLLECTION_SIZE = 8;
+const TRENDING_MIN_RECENT_INSTALLS = 5;
 const TRENDING_GRAVITY = 1.5;
 const DAY_MS = 86_400_000;
 
@@ -763,8 +763,6 @@ export function resolveCollections(collections, plugins, ranking, now) {
     if (fill !== "trending") {
       return fillEmptyCollections([collection], plugins)[0];
     }
-    const chosen = [];
-    const skipped = new Set();
     const trending = plugins
       .map((plugin) => {
         const recent = ranking?.plugins[plugin.id]?.installs14d ?? 0;
@@ -780,13 +778,12 @@ export function resolveCollections(collections, plugins, ranking, now) {
           right.score - left.score || newestFirst(left.plugin, right.plugin),
       )
       .map(({ plugin }) => plugin);
+    const chosen = new Set();
     for (const plugin of [...trending, ...newest]) {
-      if (chosen.length >= COLLECTION_SIZE) break;
-      if (skipped.has(plugin.id)) continue;
-      chosen.push(plugin.id);
-      skipped.add(plugin.id);
+      if (chosen.size >= COLLECTION_SIZE) break;
+      chosen.add(plugin.id);
     }
-    return { ...collection, pluginIds: chosen };
+    return { ...collection, pluginIds: [...chosen] };
   });
 }
 
