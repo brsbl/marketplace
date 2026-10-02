@@ -65,11 +65,33 @@ The `collections` array defines ordered plugin shelves.
 Each `pluginIds` value must name an entry and must occur only once.
 
 The first collection has the ID `new-and-notable`.
-An empty `pluginIds` array tells the build to select eight entries.
 The v2 document has a `publishedAt` value for each entry.
 The build derives this value from the first commit that added the entry file.
 The registry does not emit an `updatedAt` value.
-The empty collection fallback orders entries by the emitted `publishedAt` value.
+
+A collection with `"fill": "trending"` is computed at each publish:
+
+1. The `pluginIds` entries come first, in order. Add an ID here to pin it.
+2. The build fills the remaining spots, up to eight, by trending score.
+   The score is distinct installs in the last 14 days divided by
+   `(days since publishedAt + 2) ^ 1.5`.
+   An entry needs at least five installs in the last 14 days to qualify.
+3. If spots remain, the build fills them with the newest entries.
+
+The `exclude` array keeps entries out of the computed spots.
+Without a trending fill, an empty `pluginIds` array gets the eight newest entries.
+
+## Category order
+
+The build orders the published `categories` array at each publish.
+The `pinnedCategories` IDs come first, in order.
+The other categories follow by the summed installs of their entries in the last 30 days.
+Ties keep the order of the `categories` array.
+
+The publish workflow runs on each merge and once a day.
+It reads recent install counts from PostHog with `npm run build:ranking`.
+When those counts are unavailable, a merge still publishes.
+Computed spots then use the newest entries, and categories keep the base order.
 
 ## Screenshots and icons
 

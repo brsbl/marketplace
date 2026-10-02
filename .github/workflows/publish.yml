@@ -3,6 +3,13 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+  schedule:
+    # Daily, after the install counts, so trending shelves and the category
+    # order follow recent installs without a commit.
+    - cron: "47 6 * * *"
+concurrency:
+  group: publish
+  cancel-in-progress: false
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -15,7 +22,16 @@ jobs:
       - run: npm ci
       - name: Install Wrangler 4.86.0
         run: npm install --global wrangler@4.86.0
-      - run: npm run build
+      # A scheduled run exists only to refresh the ranking, so it stops when
+      # PostHog fails. A push still publishes, with newest-entry fallbacks.
+      - name: Build ranking.json
+        continue-on-error: ${{ github.event_name != 'schedule' }}
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          POSTHOG_PROJECT_ID: ${{ vars.POSTHOG_PROJECT_ID }}
+          POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
+        run: npm run build:ranking
+      - run: npm run build -- --ranking dist/ranking.json
       - name: Check frozen v1 entries
         if: github.event_name == 'push'
         run: npm run gate:v1
