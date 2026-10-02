@@ -86,7 +86,9 @@
       "id": "new-and-notable",
       "displayName": "New & notable",
       "fill": "trending",
-      "pluginIds": [],
+      "pluginIds": [
+        "bots-sidebar"
+      ],
       "exclude": []
     }
   ]
