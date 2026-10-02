@@ -264,13 +264,13 @@ test("trending decays recent installs by age", () => {
   assert.equal(trendingScore(10, undefined, NOW), 0);
 });
 
-test("a trending collection keeps pins, ranks by trend, then fills newest", () => {
+test("a trending collection ranks by trend, then fills newest", () => {
   const plugins = [
-    { id: "pinned", publishedAt: daysAgo(300) },
+    { id: "old-quiet", publishedAt: daysAgo(300) },
     { id: "hot-new", publishedAt: daysAgo(3) },
     { id: "big-old", publishedAt: daysAgo(90) },
     { id: "too-few", publishedAt: daysAgo(1) },
-    { id: "hidden", publishedAt: daysAgo(2) },
+    { id: "viral", publishedAt: daysAgo(2) },
     ...Array.from({ length: 6 }, (_, index) => ({
       id: `newest-${index}`,
       publishedAt: daysAgo(10 + index),
@@ -280,7 +280,7 @@ test("a trending collection keeps pins, ranks by trend, then fills newest", () =
     "hot-new": [8, 8],
     "big-old": [120, 300],
     "too-few": [4, 4],
-    hidden: [50, 50],
+    viral: [50, 50],
   });
   const [collection] = resolveCollections(
     [
@@ -288,8 +288,7 @@ test("a trending collection keeps pins, ranks by trend, then fills newest", () =
         id: "new-and-notable",
         displayName: "New & notable",
         fill: "trending",
-        pluginIds: ["pinned"],
-        exclude: ["hidden"],
+        pluginIds: [],
       },
     ],
     plugins,
@@ -300,7 +299,7 @@ test("a trending collection keeps pins, ranks by trend, then fills newest", () =
     id: "new-and-notable",
     displayName: "New & notable",
     pluginIds: [
-      "pinned",
+      "viral",
       "hot-new",
       "big-old",
       "too-few",
@@ -329,7 +328,7 @@ test("a trending collection falls back to newest entries without ranking data", 
   );
 });
 
-test("categories order by pins, then 30-day installs, then base order", () => {
+test("categories order by 30-day installs, then base order", () => {
   const categories = ["alpha", "beta", "gamma", "delta"].map((id) => ({
     id,
     displayName: id,
@@ -343,11 +342,11 @@ test("categories order by pins, then 30-day installs, then base order", () => {
   ];
   const ranking = rankingOf({ a: [0, 5], b1: [0, 3], b2: [0, 4], g: [0, 1] });
   assert.deepEqual(
-    orderCategories(categories, plugins, ranking, ["delta"]).map(({ id }) => id),
-    ["delta", "beta", "alpha", "gamma"],
+    orderCategories(categories, plugins, ranking).map(({ id }) => id),
+    ["beta", "alpha", "gamma", "delta"],
   );
   assert.deepEqual(
-    orderCategories(categories, plugins, null, []).map(({ id }) => id),
+    orderCategories(categories, plugins, null).map(({ id }) => id),
     ["alpha", "beta", "gamma", "delta"],
   );
 });

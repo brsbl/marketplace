@@ -80,16 +80,12 @@
       "description": "Plan, track, route, schedule, or automate work."
     }
   ],
-  "pinnedCategories": [],
   "collections": [
     {
       "id": "new-and-notable",
       "displayName": "New & notable",
       "fill": "trending",
-      "pluginIds": [
-        "bots-sidebar"
-      ],
-      "exclude": []
+      "pluginIds": []
     }
   ]
 }

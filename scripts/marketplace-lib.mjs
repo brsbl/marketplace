@@ -752,20 +752,19 @@ export function trendingScore(recentInstalls, publishedAt, now) {
 /**
  * Resolve each collection's published `pluginIds`.
  *
- * A collection with `"fill": "trending"` keeps its `pluginIds` as pins, then
- * fills to eight entries by trending score, then by newest. `exclude` keeps
- * an entry out of the computed spots. Without ranking data the computed
- * spots use newest entries only. Other collections keep their earlier
- * behavior: an empty `pluginIds` array gets the eight newest entries.
+ * A collection with `"fill": "trending"` gets eight entries by trending
+ * score, then by newest. Without ranking data it gets the newest entries.
+ * Other collections keep their earlier behavior: an empty `pluginIds` array
+ * gets the eight newest entries.
  */
 export function resolveCollections(collections, plugins, ranking, now) {
   const newest = [...plugins].sort(newestFirst);
-  return collections.map(({ fill, exclude, ...collection }) => {
+  return collections.map(({ fill, ...collection }) => {
     if (fill !== "trending") {
       return fillEmptyCollections([collection], plugins)[0];
     }
-    const chosen = [...new Set(collection.pluginIds ?? [])];
-    const skipped = new Set([...(exclude ?? []), ...chosen]);
+    const chosen = [];
+    const skipped = new Set();
     const trending = plugins
       .map((plugin) => {
         const recent = ranking?.plugins[plugin.id]?.installs14d ?? 0;
@@ -775,10 +774,7 @@ export function resolveCollections(collections, plugins, ranking, now) {
           score: trendingScore(recent, plugin.publishedAt, now),
         };
       })
-      .filter(
-        ({ plugin, recent }) =>
-          !skipped.has(plugin.id) && recent >= TRENDING_MIN_RECENT_INSTALLS,
-      )
+      .filter(({ recent }) => recent >= TRENDING_MIN_RECENT_INSTALLS)
       .sort(
         (left, right) =>
           right.score - left.score || newestFirst(left.plugin, right.plugin),
@@ -795,28 +791,19 @@ export function resolveCollections(collections, plugins, ranking, now) {
 }
 
 /**
- * Order categories: `pinnedCategories` first in their given order, then the
- * rest by the summed 30-day installs of their entries. Ties and missing
- * ranking data keep the base order.
+ * Order categories by the summed 30-day installs of their entries. Ties and
+ * missing ranking data keep the base order.
  */
-export function orderCategories(categories, plugins, ranking, pinnedIds = []) {
-  const pinned = new Set(pinnedIds);
+export function orderCategories(categories, plugins, ranking) {
   const installs = new Map();
   for (const plugin of plugins) {
     if (plugin.category === undefined) continue;
     const recent = ranking?.plugins[plugin.id]?.installs30d ?? 0;
     installs.set(plugin.category, (installs.get(plugin.category) ?? 0) + recent);
   }
-  const byId = new Map(categories.map((category) => [category.id, category]));
-  return [
-    ...pinnedIds.flatMap((id) => (byId.has(id) ? [byId.get(id)] : [])),
-    ...categories
-      .filter((category) => !pinned.has(category.id))
-      .sort(
-        (left, right) =>
-          (installs.get(right.id) ?? 0) - (installs.get(left.id) ?? 0),
-      ),
-  ];
+  return [...categories].sort(
+    (left, right) => (installs.get(right.id) ?? 0) - (installs.get(left.id) ?? 0),
+  );
 }
 
 const RANKING_COUNT_KEYS = ["installs14d", "installs30d"];

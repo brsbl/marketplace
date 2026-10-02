@@ -69,23 +69,20 @@ The v2 document has a `publishedAt` value for each entry.
 The build derives this value from the first commit that added the entry file.
 The registry does not emit an `updatedAt` value.
 
-A collection with `"fill": "trending"` is computed at each publish:
+A collection with `"fill": "trending"` is computed at each publish and must have an empty `pluginIds` array:
 
-1. The `pluginIds` entries come first, in order. Add an ID here to pin it.
-2. The build fills the remaining spots, up to eight, by trending score.
+1. The build picks up to eight entries by trending score.
    The score is distinct installs in the last 14 days divided by
    `(days since publishedAt + 2) ^ 1.5`.
    An entry needs at least five installs in the last 14 days to qualify.
-3. If spots remain, the build fills them with the newest entries.
+2. If spots remain, the build fills them with the newest entries.
 
-The `exclude` array keeps entries out of the computed spots.
 Without a trending fill, an empty `pluginIds` array gets the eight newest entries.
 
 ## Category order
 
 The build orders the published `categories` array at each publish.
-The `pinnedCategories` IDs come first, in order.
-The other categories follow by the summed installs of their entries in the last 30 days.
+Categories are sorted by the summed installs of their entries in the last 30 days.
 Ties keep the order of the `categories` array.
 
 The publish workflow runs on each merge and once a day.

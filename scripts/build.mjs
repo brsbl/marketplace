@@ -179,25 +179,16 @@ for (const collection of base.collections ?? []) {
   }
 }
 
-for (const categoryId of base.pinnedCategories ?? []) {
-  if (!categoryIds.has(categoryId)) {
-    problems.push(
-      `marketplace.base.json: The pinned category "${categoryId}" is not defined.`,
-    );
-  }
-}
 for (const collection of base.collections ?? []) {
   if (collection.fill !== undefined && collection.fill !== "trending") {
     problems.push(
       `marketplace.base.json: The collection "${collection.id}" has the unknown fill "${collection.fill}".`,
     );
   }
-  for (const pluginId of collection.exclude ?? []) {
-    if (!seenPluginIds.has(pluginId)) {
-      problems.push(
-        `marketplace.base.json: The collection "${collection.id}" excludes the unknown plugin "${pluginId}".`,
-      );
-    }
+  if (collection.fill === "trending" && (collection.pluginIds ?? []).length > 0) {
+    problems.push(
+      `marketplace.base.json: The trending collection "${collection.id}" must have an empty pluginIds array.`,
+    );
   }
 }
 
@@ -322,7 +313,7 @@ const collections = resolveCollections(
 const categories =
   base.categories === undefined
     ? undefined
-    : orderCategories(base.categories, v2Plugins, ranking, base.pinnedCategories);
+    : orderCategories(base.categories, v2Plugins, ranking);
 const v1Manifest = projectV1Manifest(base, plugins);
 const v2Manifest = {
   $schema: "https://getbb.app/schemas/marketplace-v2.schema.json",
