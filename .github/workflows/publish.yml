@@ -14,6 +14,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     environment: production
+    permissions:
+      contents: read
+      actions: read
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -35,8 +38,24 @@ jobs:
       - name: Check frozen v1 entries
         if: github.event_name == 'push'
         run: npm run gate:v1
+      # A scheduled run reuses this commit's assets when an earlier publish of
+      # the same commit succeeded; otherwise it uploads them like any run.
+      - name: Check published assets
+        id: assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          published=false
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            count=$(gh run list --repo "${{ github.repository }}" \
+              --workflow publish.yml --commit "${{ github.sha }}" \
+              --status success --limit 1 --json databaseId --jq length) || count=0
+            if [[ "$count" -gt 0 ]]; then published=true; fi
+          fi
+          echo "published=$published" >> "$GITHUB_OUTPUT"
       # Keep this order explicit: assets first, then v2, then v1.
       - name: Upload icons
+        if: steps.assets.outputs.published != 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
@@ -48,6 +67,7 @@ jobs:
               --file "$icon" --remote
           done
       - name: Upload screenshots
+        if: steps.assets.outputs.published != 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}

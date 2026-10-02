@@ -89,6 +89,7 @@ The other categories follow by the summed installs of their entries in the last 
 Ties keep the order of the `categories` array.
 
 The publish workflow runs on each merge and once a day.
+The daily run skips icon and screenshot uploads when an earlier publish of the same commit succeeded.
 It reads recent install counts from PostHog with `npm run build:ranking`.
 When those counts are unavailable, a merge still publishes.
 Computed spots then use the newest entries, and categories keep the base order.
