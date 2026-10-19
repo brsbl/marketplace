@@ -1,0 +1,33 @@
+{
+  "id": "playgrounds",
+  "displayName": "Playgrounds",
+  "description": "Explore answers as interactive figures you and your agent can operate. Free plugin for bb.",
+  "icon": {
+    "url": "./icons/playgrounds-54324d8f.svg"
+  },
+  "tags": [
+    "anatomy",
+    "interactive",
+    "diagrams",
+    "calculators",
+    "explanations"
+  ],
+  "author": {
+    "name": "brsbl",
+    "github": "brsbl",
+    "url": "https://github.com/brsbl"
+  },
+  "category": "thread-content",
+  "screenshots": [
+    "./screenshots/playgrounds/calculator-existing.png",
+    "./screenshots/playgrounds/library-existing.png",
+    "./screenshots/playgrounds/html-controls-existing.png"
+  ],
+  "overview": "./overview/playgrounds.md",
+  "source": {
+    "git": {
+      "url": "https://github.com/brsbl/bb-plugins.git",
+      "ref": "plugin/playgrounds"
+    }
+  }
+}
