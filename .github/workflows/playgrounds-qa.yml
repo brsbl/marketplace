@@ -1,0 +1,27 @@
+name: Playgrounds listing validation
+on:
+  push:
+    branches: [qa-playgrounds-r4]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prepare-playgrounds-r4
+          fetch-depth: 0
+      - name: Record candidate
+        run: git rev-parse HEAD
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm test
+      - run: npm run gate:v1
+      - run: npm run check
+      - uses: actions/upload-artifact@v4
+        with:
+          name: playgrounds-marketplace-preview
+          path: dist/
