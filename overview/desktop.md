@@ -25,3 +25,7 @@ Your plugin can open as a Desktop program: a desktop window with a Start menu en
 ## Requirements
 
 Desktop shows on desktop-sized screens; on a phone, the sidebar button opens its settings. bb Explorer needs the bb desktop app. Runs entirely inside bb, with no external service or account. Not affiliated with Microsoft or AOL.
+
+## Plugin access
+
+Plugins run with bb's full access; read one before installing.
