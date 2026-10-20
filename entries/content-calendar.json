@@ -18,7 +18,8 @@
   "screenshots": [
     "./screenshots/content-calendar/calendar-inline.png",
     "./screenshots/content-calendar/calendar-month.png",
-    "./screenshots/content-calendar/calendar-week.png"
+    "./screenshots/content-calendar/calendar-week.png",
+    "./screenshots/content-calendar/calendar-setup.png"
   ],
   "overview": "./overview/content-calendar.md",
   "source": {

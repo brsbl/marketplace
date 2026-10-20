@@ -16,7 +16,10 @@
     "url": "https://github.com/brsbl"
   },
   "category": "thread-content",
-  "screenshots": [],
+  "screenshots": [
+    "./screenshots/url-pills/composer-light.png",
+    "./screenshots/url-pills/conversation-light.png"
+  ],
   "overview": "./overview/url-pills.md",
   "source": {
     "git": {

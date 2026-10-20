@@ -27,7 +27,8 @@
   "category": "tasks-and-workflows",
   "screenshots": [
     "./screenshots/digests/settings.png",
-    "./screenshots/digests/settings-edit.png"
+    "./screenshots/digests/settings-edit.png",
+    "./screenshots/digests/brief.png"
   ],
   "overview": "./overview/digests.md"
 }
