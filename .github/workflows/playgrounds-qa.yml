@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 701a5ea0ea081f2f3be4d57fae67d7b57468d170
+          ref: b7d8a37b21643cfa3df4fa6a96ff5bd0339c4dc8
           fetch-depth: 0
       - name: Record candidate
         run: git rev-parse HEAD
