@@ -1,0 +1,35 @@
+{
+  "id": "extella",
+  "displayName": "Extella",
+  "description": "Lets agents reuse programs that earlier threads already wrote: search them by meaning, run them on your machine, save new ones. A thread that asks in different words still finds the saved program and runs it without writing code. Programs run on your computer through Extella Desktop and can read local files there; a run takes about 10 seconds. Later threads and other bb projects that use the same Extella agent see the same library. Needs an Extella account with an API key and agent id, and Extella Desktop on the machine that runs programs.",
+  "icon": {
+    "url": "./icons/extella-fb9ce209.svg"
+  },
+  "tags": [
+    "code-reuse",
+    "scripts",
+    "semantic-search",
+    "tool-library",
+    "local-execution",
+    "python",
+    "agent-tools"
+  ],
+  "author": {
+    "name": "Anvar Bakiyev",
+    "github": "AnvarBakiyev",
+    "url": "https://extella.dev"
+  },
+  "category": "memory-and-context",
+  "source": {
+    "git": {
+      "url": "https://github.com/AnvarBakiyev/bb-plugin-extella.git",
+      "range": "^0.1.0"
+    }
+  },
+  "overview": "./overview/extella.md",
+  "screenshots": [
+    "./screenshots/extella/reuse.jpg",
+    "./screenshots/extella/save.jpg",
+    "./screenshots/extella/settings.jpg"
+  ]
+}
