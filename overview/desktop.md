@@ -16,7 +16,7 @@ The Start menu opens a paint program (all sixteen classic tools, with pictures s
 
 ## For agents
 
-Agents read and write note pads, look at your paint pictures, and draw new ones for you to open in Paint. Send a note pad or picture to any thread as a mention. Ask an agent to sort your threads into folders; it uses `bb desktop` for you.
+Agents read and write note pads, look at your paint pictures, and draw new ones for you to open in the paint program. Send a note pad or picture to any thread as a mention. Ask an agent to sort your threads into folders; it uses `bb desktop` for you.
 
 ## For plugin authors
 
