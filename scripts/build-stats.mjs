@@ -17,6 +17,7 @@
 // `--print` writes the document to stdout instead of dist/stats.json.
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { queryHogQL } from "./posthog.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const printOnly = process.argv.includes("--print");
@@ -39,12 +40,21 @@ const MAX_ENTRIES = 5_000;
  * so no private plugin id or source can reach this file. Bundled builtins are
  * counted too even though they have no entry here: BB looks them up in this
  * same document.
+ *
+ * The lower timestamp bound loses nothing: BB first sent `plugin_installed`
+ * on 2026-08-17 (get-bb/bb#1743). Without it ClickHouse cannot prune any
+ * partition and scans the project's whole event history, which sometimes runs
+ * past PostHog's execution limit and fails the job with a 504.
  */
+const TELEMETRY_START = "2026-08-17";
+
 const QUERY = `
   SELECT properties.plugin_id AS plugin_id,
-         count(DISTINCT distinct_id) AS installs
+         count(DISTINCT distinct_id) AS installs,
+         count(DISTINCT if(timestamp > now() - INTERVAL 14 DAY, distinct_id, NULL)) AS recent_installs
   FROM events
   WHERE event = 'plugin_installed'
+    AND timestamp >= toDateTime('${TELEMETRY_START} 00:00:00')
     AND properties.plugin_id IS NOT NULL
     AND properties.plugin_id != ''
   GROUP BY plugin_id
@@ -52,63 +62,28 @@ const QUERY = `
   LIMIT ${MAX_ENTRIES}
 `;
 
-function required(name) {
-  const value = process.env[name];
-  if (value === undefined || value.trim().length === 0) {
-    console.error(`error: ${name} is not set`);
-    process.exit(1);
-  }
-  return value.trim();
-}
+const isCount = (value) => Number.isSafeInteger(value) && value >= 0;
 
-async function queryInstallCounts() {
-  const host = (process.env.POSTHOG_HOST ?? "https://us.posthog.com").replace(
-    /\/+$/,
-    "",
-  );
-  const projectId = required("POSTHOG_PROJECT_ID");
-  const response = await fetch(`${host}/api/projects/${projectId}/query/`, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${required("POSTHOG_API_KEY")}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      query: { kind: "HogQLQuery", query: QUERY },
-    }),
-    signal: AbortSignal.timeout(120_000),
-  });
-  if (!response.ok) {
-    // The body names the real problem (bad key, wrong project, HogQL error).
-    const detail = await response.text().catch(() => "");
-    throw new Error(
-      `PostHog query failed with HTTP ${response.status}: ${detail.slice(0, 500)}`,
-    );
-  }
-  const body = await response.json();
-  if (!Array.isArray(body?.results)) {
-    throw new Error("PostHog answer has no results array");
-  }
-  return body.results;
-}
-
-/** Rows PostHog returns are `[plugin_id, installs]`; drop anything else. */
+/**
+ * Rows PostHog returns are `[plugin_id, installs, recent_installs]`; drop
+ * anything else. `recentInstalls` counts the last 14 days so BB can rank
+ * shelves by momentum rather than by lifetime totals.
+ */
 function pluginsFromRows(rows) {
   const plugins = {};
   let dropped = 0;
   for (const row of rows) {
-    const [id, installs] = Array.isArray(row) ? row : [];
+    const [id, installs, recentInstalls] = Array.isArray(row) ? row : [];
     if (
       typeof id !== "string" ||
       !ENTRY_ID_PATTERN.test(id) ||
-      typeof installs !== "number" ||
-      !Number.isSafeInteger(installs) ||
-      installs < 0
+      !isCount(installs) ||
+      !isCount(recentInstalls)
     ) {
       dropped += 1;
       continue;
     }
-    plugins[id] = { installs };
+    plugins[id] = { installs, recentInstalls };
   }
   if (dropped > 0) {
     console.error(`warning: dropped ${dropped} unusable row(s) from PostHog`);
@@ -124,7 +99,7 @@ function pluginsFromRows(rows) {
 
 let rows;
 try {
-  rows = await queryInstallCounts();
+  rows = await queryHogQL(QUERY);
 } catch (error) {
   // A rejected top-level await prints an undici stack trace; the job log
   // should name the problem instead.

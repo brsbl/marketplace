@@ -1,0 +1,32 @@
+{
+  "id": "tab-close-right",
+  "displayName": "Tab Close Right",
+  "description": "Keep tab icons visible and close tabs from the right. Active tabs always show their close button; other tabs reveal it on hover or keyboard focus without shifting the title. Touch screens show the button without hover. Requires BB 0.46.1+; future BB layout changes may require an update.",
+  "icon": {
+    "url": "./icons/tab-close-right-fba80b9e.svg"
+  },
+  "screenshots": [
+    "./screenshots/tab-close-right/close-button-right.jpg"
+  ],
+  "overview": "./overview/tab-close-right.md",
+  "tags": [
+    "tabs",
+    "close-button",
+    "interface",
+    "navigation"
+  ],
+  "author": {
+    "name": "Nikolai Berezovskii",
+    "github": "brzvsk",
+    "url": "https://github.com/brzvsk"
+  },
+  "category": "themes-and-appearance",
+  "source": {
+    "git": {
+      "url": "https://github.com/brzvsk/bb-plugins.git",
+      "subdir": "plugins/tab-close-right",
+      "range": "^0.1.0",
+      "tagPrefix": "tab-close-right/"
+    }
+  }
+}

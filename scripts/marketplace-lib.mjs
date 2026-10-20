@@ -712,21 +712,71 @@ export function readEntryAddedDates(root) {
   return parseEntryAddedDates(output);
 }
 
-export function fillEmptyCollections(collections, plugins) {
-  const fallbackIds = [...plugins]
-    .sort((left, right) => {
-      return (
-        timeValue(right.publishedAt) - timeValue(left.publishedAt) ||
-        left.id.localeCompare(right.id)
-      );
+const COLLECTION_SIZE = 8;
+const TRENDING_MIN_RECENT_INSTALLS = 5;
+const TRENDING_GRAVITY = 1.5;
+const DAY_MS = 86_400_000;
+
+function newestFirst(left, right) {
+  return (
+    timeValue(right.publishedAt) - timeValue(left.publishedAt) ||
+    left.id.localeCompare(right.id)
+  );
+}
+
+/**
+ * Fill each collection that has an empty `pluginIds` array with eight
+ * entries: the top trending ones, then the newest.
+ *
+ * Trending is Hacker News style gravity: installs in the last 14 days divided
+ * by a power of age, so a new plugin with a few installs can outrank an older
+ * one with many, and every plugin fades out gradually instead of dropping off
+ * at a cutoff. Without ranking data the fill is the eight newest entries.
+ */
+export function fillEmptyCollections(
+  collections,
+  plugins,
+  ranking = null,
+  now = Date.now(),
+) {
+  const trending = plugins
+    .map((plugin) => {
+      const recent = ranking?.plugins[plugin.id]?.installs14d ?? 0;
+      const ageDays = Math.max(0, (now - timeValue(plugin.publishedAt)) / DAY_MS);
+      return { plugin, recent, score: recent / (ageDays + 2) ** TRENDING_GRAVITY };
     })
-    .slice(0, 8)
-    .map((plugin) => plugin.id);
+    .filter(({ recent }) => recent >= TRENDING_MIN_RECENT_INSTALLS)
+    .sort(
+      (left, right) =>
+        right.score - left.score || newestFirst(left.plugin, right.plugin),
+    )
+    .map(({ plugin }) => plugin);
+  const fallbackIds = [
+    ...new Set(
+      [...trending, ...[...plugins].sort(newestFirst)].map((plugin) => plugin.id),
+    ),
+  ].slice(0, COLLECTION_SIZE);
 
   return collections.map((collection) =>
     Array.isArray(collection.pluginIds) && collection.pluginIds.length === 0
       ? { ...collection, pluginIds: fallbackIds }
       : collection,
+  );
+}
+
+/**
+ * Order categories by the summed 30-day installs of their entries. Ties and
+ * missing ranking data keep the base order.
+ */
+export function orderCategories(categories, plugins, ranking) {
+  const installs = new Map();
+  for (const plugin of plugins) {
+    if (plugin.category === undefined) continue;
+    const recent = ranking?.plugins[plugin.id]?.installs30d ?? 0;
+    installs.set(plugin.category, (installs.get(plugin.category) ?? 0) + recent);
+  }
+  return [...categories].sort(
+    (left, right) => (installs.get(right.id) ?? 0) - (installs.get(left.id) ?? 0),
   );
 }
 

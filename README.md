@@ -53,7 +53,10 @@ A user controls each plugin installation and update.
 ## Categories
 
 The `categories` array defines the available category IDs and their display text.
-An entry can use one category ID from this array.
+An entry has one primary `category` ID. Add up to three `secondaryCategories`
+to place the same plugin in other category shelves in bb versions that support
+them. Older bb versions display the primary category only. Secondary IDs must
+be distinct from the primary ID and from each other.
 
 The v2 schema permits an entry without a category.
 This repository requires a category for each new or changed entry.
@@ -65,11 +68,28 @@ The `collections` array defines ordered plugin shelves.
 Each `pluginIds` value must name an entry and must occur only once.
 
 The first collection has the ID `new-and-notable`.
-An empty `pluginIds` array tells the build to select eight entries.
 The v2 document has a `publishedAt` value for each entry.
 The build derives this value from the first commit that added the entry file.
 The registry does not emit an `updatedAt` value.
-The empty collection fallback orders entries by the emitted `publishedAt` value.
+
+An empty `pluginIds` array tells the build to select eight entries at each publish:
+
+1. The build picks entries by trending score.
+   The score is distinct installs in the last 14 days divided by
+   `(days since publishedAt + 2) ^ 1.5`.
+   An entry needs at least five installs in the last 14 days to qualify.
+2. If spots remain, the build fills them with the newest entries.
+
+## Category order
+
+The build orders the published `categories` array at each publish.
+Categories are sorted by the summed installs of their entries in the last 30 days.
+Ties keep the order of the `categories` array.
+
+The publish workflow runs on each merge and once a day.
+It reads recent install counts from PostHog with `npm run build:ranking`.
+When those counts are unavailable, a merge still publishes.
+Computed spots then use the newest entries, and categories keep the base order.
 
 ## Screenshots and icons
 
@@ -140,6 +160,11 @@ Bundled BB plugins also appear in this document.
 They do not need files under `entries/`.
 BB ignores `stats.json` documents from third-party marketplaces.
 Install counts are BB measurements, not publisher claims.
+
+Each plugin has `installs`, the distinct installations of all time.
+Each plugin also has `recentInstalls`, the distinct installations in the last 14 days.
+BB ranks the BB Official shelf by `recentInstalls` and the publish date.
+Older BB versions ignore `recentInstalls`.
 
 The scheduled workflow gets counts from the `plugin_installed` PostHog event.
 The workflow publishes no update when PostHog returns no counts.

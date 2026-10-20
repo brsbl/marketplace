@@ -1,0 +1,38 @@
+{
+  "id": "lego",
+  "displayName": "Lego",
+  "description": "Split a coding task across parallel agents and get it back assembled and verified by one Master Builder, while a Lego model builds live. The planning agent writes an instruction book: bags that each own their files, the interfaces every bag must honour, and the steps to assemble them. You choose how many builders run, up to eight, and which provider and model the builders and the Master Builder use; nothing starts until you submit. A banner above the composer and a side-panel workbench show minifigure builders placing bricks as each step lands, and finished models go on a collector's shelf. Builders and the Master Builder are ordinary BB threads on providers you already set up, so a build spends several agents' worth of tokens.",
+  "icon": {
+    "url": "./icons/lego-1cc9f203.svg"
+  },
+  "screenshots": [
+    "./screenshots/lego/build.png",
+    "./screenshots/lego/setup-form.png"
+  ],
+  "overview": "./overview/lego.md",
+  "tags": [
+    "multi-agent",
+    "parallel-agents",
+    "orchestration",
+    "subagents",
+    "task-planning",
+    "integration",
+    "live-progress",
+    "visualization"
+  ],
+  "author": {
+    "name": "MacHatter1",
+    "github": "MacHatter1",
+    "url": "https://github.com/MacHatter1"
+  },
+  "category": "agents-and-providers",
+  "secondaryCategories": [
+    "tasks-and-workflows"
+  ],
+  "source": {
+    "git": {
+      "url": "https://github.com/MacHatter1/bb-plugin-lego.git",
+      "range": "^0.1.0"
+    }
+  }
+}

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Build the frozen v1 document and the full v2 document from one source.
 // The --liveness option also checks each remote source.
+// The --ranking <path> option reads recent install counts from
+// scripts/build-ranking.mjs; without it, computed shelves use newest entries.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -12,6 +14,7 @@ import {
   findOrphanOverviewFiles,
   findOrphanScreenshotFiles,
   fillEmptyCollections,
+  orderCategories,
   projectV1Manifest,
   pullRequestEntryFiles,
   readEntryAddedDates,
@@ -23,6 +26,9 @@ import {
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const liveness = process.argv.includes("--liveness");
+const rankingFlag = process.argv.indexOf("--ranking");
+const rankingPath =
+  rankingFlag === -1 ? undefined : process.argv[rankingFlag + 1];
 const problems = [];
 const warnings = [];
 
@@ -166,10 +172,34 @@ for (const collection of base.collections ?? []) {
   }
 }
 
+function readRanking() {
+  if (rankingPath === undefined) return null;
+  try {
+    const value = readJson(rankingPath);
+    if (value?.schemaVersion === 1 && value.plugins instanceof Object) {
+      return value;
+    }
+  } catch {}
+  warnings.push(
+    `The ranking file ${rankingPath} is not usable. Computed shelves use newest entries and the base category order.`,
+  );
+  return null;
+}
+
+const ranking = readRanking();
+
 const plugins = entryRecords.map(({ entry }) => entry);
 for (const entry of plugins) {
   if (entry.category !== undefined && !categoryIds.has(entry.category)) {
     problems.push(`${entry.id}.json: The category "${entry.category}" is not defined.`);
+  }
+  for (const secondary of entry.secondaryCategories ?? []) {
+    if (!categoryIds.has(secondary)) {
+      problems.push(`${entry.id}.json: The secondary category "${secondary}" is not defined.`);
+    }
+    if (secondary === entry.category) {
+      problems.push(`${entry.id}.json: The primary category cannot be secondary.`);
+    }
   }
 }
 
@@ -255,7 +285,12 @@ function entryAddedDates() {
 const collections = fillEmptyCollections(
   base.collections ?? [],
   v2Plugins,
+  ranking,
 );
+const categories =
+  base.categories === undefined
+    ? undefined
+    : orderCategories(base.categories, v2Plugins, ranking);
 const v1Manifest = projectV1Manifest(base, plugins);
 const v2Manifest = {
   $schema: "https://getbb.app/schemas/marketplace-v2.schema.json",
@@ -263,7 +298,7 @@ const v2Manifest = {
   name: base.name,
   displayName: base.displayName,
   ...(base.description === undefined ? {} : { description: base.description }),
-  ...(base.categories === undefined ? {} : { categories: base.categories }),
+  ...(categories === undefined ? {} : { categories }),
   ...(base.collections === undefined ? {} : { collections }),
   plugins: v2Plugins,
 };
@@ -347,7 +382,7 @@ const outputs = [
   ["v2/marketplace.json", v2Manifest],
 ];
 for (const [label, manifest] of outputs) {
-  const bytes = `${JSON.stringify(manifest, null, 2)}\n`;
+  const bytes = `${JSON.stringify(manifest, null, label.startsWith("v2/") ? undefined : 2)}\n`;
   if (Buffer.byteLength(bytes, "utf8") > 1_048_576) {
     console.error(`error: The ${label} document is larger than 1 MiB.`);
     process.exit(1);
@@ -361,7 +396,7 @@ writeFileSync(
 );
 writeFileSync(
   join(root, "dist", "v2", "marketplace.json"),
-  `${JSON.stringify(v2Manifest, null, 2)}\n`,
+  `${JSON.stringify(v2Manifest)}\n`,
 );
 console.log(`built dist/marketplace.json with ${plugins.length} entries`);
 console.log(`built dist/v2/marketplace.json with ${plugins.length} entries`);

@@ -22,6 +22,7 @@ import {
   fillEmptyCollections,
   findOrphanOverviewFiles,
   inspectImage,
+  orderCategories,
   parseEntryAddedDates,
   projectV1Entry,
   projectV1Manifest,
@@ -240,6 +241,80 @@ test("the collection fallback uses publishedAt and an id tie-break", () => {
     plugins,
   );
   assert.deepEqual(result[0].pluginIds, ["beta", "charlie", "alpha", "delta"]);
+});
+
+const NOW = Date.parse("2026-10-01T00:00:00Z");
+const daysAgo = (days) => new Date(NOW - days * 86_400_000).toISOString();
+const rankingOf = (counts) => ({
+  plugins: Object.fromEntries(
+    Object.entries(counts).map(([id, [installs14d, installs30d]]) => [
+      id,
+      { installs14d, installs30d },
+    ]),
+  ),
+});
+
+test("an empty collection ranks by trend, then fills newest", () => {
+  const plugins = [
+    { id: "old-quiet", publishedAt: daysAgo(300) },
+    { id: "hot-new", publishedAt: daysAgo(3) },
+    { id: "big-old", publishedAt: daysAgo(90) },
+    { id: "too-few", publishedAt: daysAgo(1) },
+    { id: "viral", publishedAt: daysAgo(2) },
+    ...Array.from({ length: 6 }, (_, index) => ({
+      id: `newest-${index}`,
+      publishedAt: daysAgo(10 + index),
+    })),
+  ];
+  const ranking = rankingOf({
+    "hot-new": [8, 8],
+    "big-old": [120, 300],
+    "too-few": [4, 4],
+    viral: [50, 50],
+  });
+  const [collection] = fillEmptyCollections(
+    [{ id: "new-and-notable", displayName: "New & notable", pluginIds: [] }],
+    plugins,
+    ranking,
+    NOW,
+  );
+  assert.deepEqual(collection, {
+    id: "new-and-notable",
+    displayName: "New & notable",
+    pluginIds: [
+      "viral",
+      "hot-new",
+      "big-old",
+      "too-few",
+      "newest-0",
+      "newest-1",
+      "newest-2",
+      "newest-3",
+    ],
+  });
+});
+
+test("categories order by 30-day installs, then base order", () => {
+  const categories = ["alpha", "beta", "gamma", "delta"].map((id) => ({
+    id,
+    displayName: id,
+    description: id,
+  }));
+  const plugins = [
+    { id: "a", category: "alpha" },
+    { id: "b1", category: "beta" },
+    { id: "b2", category: "beta" },
+    { id: "g", category: "gamma" },
+  ];
+  const ranking = rankingOf({ a: [0, 5], b1: [0, 3], b2: [0, 4], g: [0, 1] });
+  assert.deepEqual(
+    orderCategories(categories, plugins, ranking).map(({ id }) => id),
+    ["beta", "alpha", "gamma", "delta"],
+  );
+  assert.deepEqual(
+    orderCategories(categories, plugins, null).map(({ id }) => id),
+    ["alpha", "beta", "gamma", "delta"],
+  );
 });
 
 test("the Git log parser keeps the first addition date", () => {

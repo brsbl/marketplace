@@ -1,0 +1,37 @@
+{
+  "id": "browser-gestures",
+  "displayName": "Browser Gestures",
+  "description": "Swipe two fingers on the trackpad to go back and forward in the BB browser. A dark arrow slides in from the edge as you swipe, and the page changes when you lift your fingers; pull back to cancel. Vertical scrolling and horizontal scrollers that can still move keep working as before. Requires the BB desktop app and a trackpad.",
+  "icon": {
+    "url": "./icons/browser-gestures-ee0b6231.svg"
+  },
+  "screenshots": [
+    "./screenshots/browser-gestures/swipe-ready.jpg",
+    "./screenshots/browser-gestures/swipe-in-progress.jpg"
+  ],
+  "overview": "./overview/browser-gestures.md",
+  "tags": [
+    "browser",
+    "trackpad",
+    "gestures",
+    "swipe",
+    "back-forward",
+    "history",
+    "navigation",
+    "macos"
+  ],
+  "author": {
+    "name": "Nikolai Berezovskii",
+    "github": "brzvsk",
+    "url": "https://github.com/brzvsk"
+  },
+  "category": "utilities",
+  "source": {
+    "git": {
+      "url": "https://github.com/brzvsk/bb-plugins.git",
+      "subdir": "plugins/browser-gestures",
+      "range": "^0.1.0",
+      "tagPrefix": "browser-gestures/"
+    }
+  }
+}
