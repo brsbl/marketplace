@@ -19,9 +19,10 @@
   },
   "category": "thread-content",
   "screenshots": [
-    "./screenshots/playgrounds/calculator-existing.png",
-    "./screenshots/playgrounds/library-existing.png",
-    "./screenshots/playgrounds/html-controls-existing.png"
+    "./screenshots/playgrounds/anatomy-quick.png",
+    "./screenshots/playgrounds/calculator.png",
+    "./screenshots/playgrounds/library.png",
+    "./screenshots/playgrounds/html-controls.png"
   ],
   "overview": "./overview/playgrounds.md",
   "source": {
