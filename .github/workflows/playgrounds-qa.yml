@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: prepare-playgrounds-r4
+          ref: 701a5ea0ea081f2f3be4d57fae67d7b57468d170
           fetch-depth: 0
       - name: Record candidate
         run: git rev-parse HEAD
