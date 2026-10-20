@@ -4,7 +4,7 @@ Free plugin for bb.
 
 [Anatomy by Ryan (@wheresryan22)](https://skills.wheresryan.sh/anatomy). Playgrounds includes an adapted copy of Anatomy, released under the MIT license.
 
-## Hero clip
+## Hero clip — TODO after November 5
 
 Hero clip slot — Growth records the launch demonstration on November 5. Replace this paragraph with the approved clip link before launch.
 
